@@ -1,42 +1,69 @@
 ﻿@model RoomManagement.Models.Room
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails de la Chambre";
 }
 
-<h1>Details</h1>
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
 
-<div>
-    <h4>Room</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RoomNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RoomNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PricePerNight)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PricePerNight)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Statut)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Statut)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">
+                <i class="bi bi-info-circle"></i> Fiche technique de la chambre
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Numéro:</dt>
+                        <dd class="col-sm-8">@Model.RoomNumber</dd>
+
+                        <dt class="col-sm-4">Type:</dt>
+                        <dd class="col-sm-8">
+                            @switch (Model.Type)
+                            {
+                                case "Simple":
+                                    <span class="badge bg-info">@Model.Type</span>
+                                    break;
+                                case "Double":
+                                    <span class="badge bg-warning text-dark">@Model.Type</span>
+                                    break;
+                                case "Familiale":
+                                    <span class="badge bg-success">@Model.Type</span>
+                                    break;
+                                default:
+                                    @Model.Type
+                                    break;
+                            }
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Prix/nuit:</dt>
+                        <dd class="col-sm-8">@Model.PricePerNight.ToString("N0") Ariary</dd>
+
+                        <dt class="col-sm-4">Statut:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.Statut)
+                            {
+                                <span class="badge bg-success">Libre</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Occupée</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
